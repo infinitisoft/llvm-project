@@ -711,6 +711,8 @@ def OR   : ALU_rr<0b0000000, 0b110, "or", /*Commutable*/1>,
            Sched<[WriteIALU, ReadIALU, ReadIALU]>;
 def AND  : ALU_rr<0b0000000, 0b111, "and", /*Commutable*/1>,
            Sched<[WriteIALU, ReadIALU, ReadIALU]>;
+def MVP  : ALU_rr<0b0001011, 0b111, "mvp", /*Commutable*/0>,
+           Sched<[WriteIALU, ReadIALU, ReadIALU]>;
 
 let hasSideEffects = 1, mayLoad = 0, mayStore = 0 in {
 def FENCE : RVInstI<0b000, OPC_MISC_MEM, (outs),
@@ -1905,7 +1907,7 @@ def : Pat<(debugtrap), (EBREAK)>;
 
 let Predicates = [IsRV64], Uses = [X5],
     Defs = [X1, X6, X7, X28, X29, X30, X31] in
-def HWASAN_CHECK_MEMACCESS_SHORTGRANULES 
+def HWASAN_CHECK_MEMACCESS_SHORTGRANULES
   : Pseudo<(outs), (ins GPRJALR:$ptr, i32imm:$accessinfo),
            [(int_hwasan_check_memaccess_shortgranules X5, GPRJALR:$ptr,
                                                       (i32 timm:$accessinfo))]>;

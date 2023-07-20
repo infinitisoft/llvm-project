@@ -368,11 +368,11 @@ class VALUVXNoVm<bits<6> funct6, RISCVVFormat opv, string opcodestr>
   let vm = 1;
 }
 
-// op vd, vs1, vs2
+// op rd, rs1, rs2
 class VALUMV<bits<7> funct7, bits<3> mask, string opcodestr>
     : RVInstMV<funct7, mask, (outs VR:$vd),
-               (ins VR:$vs1, VR:$vs2),
-               opcodestr, "$vd, $vs1, $vs2">;
+               (ins GPR:$rs1, GPR:$rs2),
+               opcodestr, "$vd, $rs1, $rs2">;
 
 // op vd, vs2, imm, vm
 class VALUVI<bits<6> funct6, string opcodestr, Operand optype = simm5>

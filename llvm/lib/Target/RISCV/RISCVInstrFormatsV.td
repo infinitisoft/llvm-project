@@ -147,13 +147,13 @@ class RVInstVX<bits<6> funct6, RISCVVFormat opv, dag outs, dag ins,
 class RVInstMV<bits<7> funct7, bits<3> mask, dag outs, dag ins,
                 string opcodestr, string argstr>
     : RVInst<outs, ins, opcodestr, argstr, [], InstFormatR> {
-  bits<5> vs2;
-  bits<5> vs1;
+  bits<5> rs2;
+  bits<5> rs1;
   bits<5> vd;
 
   let Inst{31-25} = funct7;
-  let Inst{24-20} = vs2;
-  let Inst{19-15} = vs1;
+  let Inst{24-20} = rs2;
+  let Inst{19-15} = rs1;
   let Inst{14-12} = mask;
   let Inst{11-7} = vd;
   let Opcode = OPC_OP_V.Value;
