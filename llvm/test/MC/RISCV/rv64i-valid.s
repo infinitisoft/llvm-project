@@ -105,3 +105,13 @@ srlw s11, t3, t4
 # CHECK-ASM-AND-OBJ: sraw t5, t6, zero
 # CHECK-ASM: encoding: [0x3b,0xdf,0x0f,0x40]
 sraw t5, t6, zero
+
+# CHECK-ASM-AND-OBJ: mvp a2, a0, a1
+# [0000011 0 1011 0101 0 111 0110 0 000 1011]
+# CHECK-ASM: encoding: [0x0b,0x76,0xb5,0x06]
+mvp a2, a0, a1
+
+# CHECK-ASM-AND-OBJ: mvp.l a2, a0, a1
+# [0000100 0 1011 0101 0 111 0110 0 000 1011]
+# CHECK-ASM: encoding: [0x0b,0x76,0xb5,0x08]
+mvp.l a2, a0, a1

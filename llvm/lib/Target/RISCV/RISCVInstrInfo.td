@@ -587,6 +587,14 @@ class ALU_rr<bits<7> funct7, bits<3> funct3, string opcodestr,
   let isCommutable = Commutable;
 }
 
+let hasSideEffects = 0, mayLoad = 0, mayStore = 0 in
+class MVP_rr<bits<7> funct7, bits<3> funct3, string opcodestr,
+             bit Commutable = 0>
+    : RVInstR<funct7, funct3, OPC_CUSTOM_0, (outs GPR:$rd), (ins GPR:$rs1, GPR:$rs2),
+              opcodestr, "$rd, $rs1, $rs2"> {
+  let isCommutable = Commutable;
+}
+
 let hasNoSchedulingInfo = 1,
     hasSideEffects = 1, mayLoad = 0, mayStore = 0 in
 class CSR_ir<bits<3> funct3, string opcodestr>
@@ -711,7 +719,9 @@ def OR   : ALU_rr<0b0000000, 0b110, "or", /*Commutable*/1>,
            Sched<[WriteIALU, ReadIALU, ReadIALU]>;
 def AND  : ALU_rr<0b0000000, 0b111, "and", /*Commutable*/1>,
            Sched<[WriteIALU, ReadIALU, ReadIALU]>;
-def MVP  : ALU_rr<0b0001011, 0b111, "mvp", /*Commutable*/0>,
+def MVP  : MVP_rr<0b0000011, 0b111, "mvp", /*Commutable*/0>,  // all in one
+           Sched<[WriteIALU, ReadIALU, ReadIALU]>;
+def MVPL  : MVP_rr<0b0000100, 0b111, "mvp.l", /*Commutable*/0>,  // preload
            Sched<[WriteIALU, ReadIALU, ReadIALU]>;
 
 let hasSideEffects = 1, mayLoad = 0, mayStore = 0 in {
