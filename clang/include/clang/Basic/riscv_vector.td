@@ -1037,6 +1037,12 @@ void __riscv_vwrite_csr(enum RVV_CSR __csr, unsigned long __value) {
       break;
   }
 }
+
+static __inline__ __attribute__((__always_inline__, __nodebug__))
+void __riscv_mvp(float *a, float *b, float *c) {
+  __asm__ __volatile__ ("mvp %2, %1, %0" : "=r"(c) : "r"(a), "r"(b) : "memory");
+}
+
 }] in
 def vread_vwrite_csr: RVVHeader;
 
